@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/animations.css">  
+    <link rel="stylesheet" href="css/main.css">  
+    <link rel="stylesheet" href="css/index.css">
+    <title>Afya</title>
+    <style>
+        table{
+            animation: transitionIn-Y-bottom 0.5s;
+        }
+        .lang-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(12, 22, 38, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+        .lang-modal-overlay.show {
+            display: flex;
+        }
+        .lang-modal {
+            width: min(360px, 100%);
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .lang-modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 0 8px;
+            color: #123a6b;
+        }
+        .lang-modal-subtitle {
+            margin: 0 0 16px;
+            color: #5b6676;
+            font-size: 14px;
+        }
+        .lang-modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .lang-modal-btn {
+            border: none;
+            background: #2b7fff;
+            color: white;
+            padding: 10px 14px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .lang-modal-btn.secondary {
+            background: #e9f1ff;
+            color: #2b7fff;
+        }
+    </style>
+        
+</head>
+<body>
+    
+    <div class="full-height">
+        <center>
+        <table border="0">
+            <tr>
+                <td width="80%">
+                    <font class="edoc-logo">Afya. </font>
+                    <font class="edoc-logo-sub">| YOUR DIGITAL HEALTHCARE PLATFORM</font>
+                </td>
+                <td width="10%">
+                   <a href="login.php"  class="non-style-link"><p class="nav-item" data-i18n data-en="LOGIN" data-fr="CONNEXION">LOGIN</p></a>
+                </td>
+                <td  width="10%">
+                    <a href="signup.php" class="non-style-link"><p class="nav-item" data-i18n data-en="REGISTER" data-fr="S'INSCRIRE" style="padding-right: 10px;">REGISTER</p></a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div id="lang-modal" class="lang-modal-overlay show" aria-label="Language selector">
+                        <div class="lang-modal">
+                            <p class="lang-modal-title" data-i18n data-en="Choose your language" data-fr="Choisissez votre langue">Choose your language</p>
+                            <p class="lang-modal-subtitle" data-i18n data-en="Select your preferred language to continue." data-fr="Sélectionnez votre langue préférée pour continuer.">Select your preferred language to continue.</p>
+                            <div class="lang-modal-actions">
+                                <button type="button" class="lang-modal-btn" data-lang="en">English</button>
+                                <button type="button" class="lang-modal-btn secondary" data-lang="fr">Français</button>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td  colspan="3">
+                    <p class="heading-text" data-i18n data-en="Avoid Hassles & Delays." data-fr="Évitez les tracas et les délais.">Avoid Hassles & Delays.</p>
+
+                </td>
+            </tr>
+            <tr>
+                <td  colspan="3">
+                    <p class="sub-text2" data-i18n data-en="How is health today, Sounds like not good!&#10;Don't worry. Find your doctor online. Book as you wish with Afya.&#10;We offer you a free doctor channeling service. Make your appointment now." data-fr="Comment se porte votre santé aujourd'hui ? Cela semble difficile !&#10;Ne vous inquiétez pas. Trouvez votre médecin en ligne. Réservez comme vous le souhaitez avec Afya.&#10;Nous vous proposons un service gratuit de prise de rendez-vous avec un médecin. Prenez rendez-vous maintenant.">How is health today, Sounds like not good!<br>Don't worry. Find your doctor online Book as you wish with Afya. <br>
+                    We offer you a free doctor channeling service, Make your appointment now.</p>
+                </td>
+            </tr>
+            <tr>
+                
+                <td colspan="3">
+                    <center>
+                    <a href="login.php" >
+                        <input type="button" value="Make Appointment" data-i18n data-en="Make Appointment" data-fr="Prendre rendez-vous" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
+                    </a>
+                </center>
+                </td>
+                
+            </tr>
+            <tr>
+                <td colspan="3">
+                   
+                </td>
+            </tr>
+        </table>
+        <p class="sub-text2 footer-hashen">A Web Solution by Afya Development team.</p>
+    </center>
+    
+    </div>
+    <script>
+        const modal = document.getElementById('lang-modal');
+        const modalButtons = Array.from(document.querySelectorAll('.lang-modal-btn'));
+        const translatableElements = Array.from(document.querySelectorAll('[data-i18n]'));
+
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            translatableElements.forEach(function (element) {
+                const translation = element.dataset[lang] || element.dataset.en || element.textContent;
+                if (element.tagName === 'INPUT') {
+                    element.value = translation;
+                } else {
+                    element.textContent = translation;
+                }
+            });
+        }
+
+        modalButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                setLanguage(button.dataset.lang);
+                modal.classList.remove('show');
+            });
+        });
+
+        window.addEventListener('load', function () {
+            setLanguage('en');
+            modal.classList.add('show');
+        });
+    </script>
+</body>
+</html>
